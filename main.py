@@ -26,11 +26,14 @@ db = DictoBot(command_prefix=os.getenv('PREFIX'))
 async def define(ctx, word):
     '''Define a word in Merriam Webster\'s Collegiate Dictonary''' 
     data = lookup_word(word)[0]
-    embed_message = discord.Embed(title=word)
-    j = 0
-    for i in data['shortdef']:
-        embed_message.add_field(name=j+1, value=i, inline=False)
-        j += 1
-    await ctx.send(embed=embed_message)
+    try:
+        embed_message = discord.Embed(title=word)
+        j = 0
+        for i in data['shortdef']:
+            embed_message.add_field(name=j+1, value=i, inline=False)
+            j += 1
+        await ctx.send(embed=embed_message)
+    except:
+        await ctx.send('That word does not exist in the Merriam Webster Collegiate dictionary.')
 
 db.run(os.getenv('TOKEN'))
